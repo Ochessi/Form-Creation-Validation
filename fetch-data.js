@@ -1,48 +1,46 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // Define API URL
+    // Define API URL (as constant)
     const apiUrl = 'https://jsonplaceholder.typicode.com/users';
     
-    // Get DOM elements
+    // Get DOM element
     const dataContainer = document.getElementById('api-data');
     
     try {
         // Fetch user data
         const response = await fetch(apiUrl);
         
-        // Check if response is successful
+        // Check response status
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        // Parse JSON response
+        // Parse JSON
         const users = await response.json();
         
         // Clear loading message
         dataContainer.innerHTML = '';
         
-        // Create user list
+        // Create list element
         const userList = document.createElement('ul');
         
-        // Add each user to the list
+        // Populate list
         users.forEach(user => {
             const listItem = document.createElement('li');
             listItem.textContent = user.name;
             userList.appendChild(listItem);
         });
         
-        // Append list to container
+        // Display list
         dataContainer.appendChild(userList);
         
     } catch (error) {
         // Handle errors
         dataContainer.innerHTML = '';
-        const errorMessage = document.createElement('div');
-        errorMessage.textContent = 'Failed to load user data.';
-        errorMessage.style.color = '#dc3545';
-        errorMessage.style.padding = '15px';
-        errorMessage.style.textAlign = 'center';
-        dataContainer.appendChild(errorMessage);
+        const errorElement = document.createElement('div');
+        errorElement.textContent = 'Failed to load user data.';
+        errorElement.style.color = '#dc3545';
+        dataContainer.appendChild(errorElement);
         
-        console.error('Fetch error:', error);
+        console.error('Error fetching data:', error);
     }
 });
